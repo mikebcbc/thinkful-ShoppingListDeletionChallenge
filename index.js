@@ -16,6 +16,7 @@ var NEW_ITEM_FORM_IDENTIFIER = '#js-shopping-list-form';
 var NEW_ITEM_FORM_INPUT_IDENTIFIER = '.js-shopping-list-entry';
 
 var ITEM_CHECKED_BUTTON_IDENTIFIER = '.js-item-toggle';
+var ITEM_DELETE_BUTTON_IDENTIFIER = '.js-item-delete';
 
 
 function generateItemElement(item, itemIndex, template) {
@@ -76,6 +77,11 @@ function toggleCheckedForListItem(itemIndex) {
   STORE[itemIndex].checked = !STORE[itemIndex].checked;
 }
 
+function deleteListItem(itemIndex) {
+  console.log("Deleting item at index " + itemIndex);
+  STORE.splice(itemIndex, 1);
+}
+
 
 function handleItemCheckClicked() {
   $(SHOPPING_LIST_ELEMENT_IDENTIFIER).on('click', ITEM_CHECKED_BUTTON_IDENTIFIER, function(event) {
@@ -88,7 +94,12 @@ function handleItemCheckClicked() {
 
 
 function handleDeleteItemClicked() {
-  console.log('`handleDeleteItemClicked` ran');
+  $(SHOPPING_LIST_ELEMENT_IDENTIFIER).on('click', ITEM_DELETE_BUTTON_IDENTIFIER, function(event) {
+    console.log('`handleDeleteItemClicked` ran');
+    var itemIndex = getItemIndexFromElement(event.currentTarget);
+    deleteListItem(itemIndex);
+    renderShoppingList();
+  })
 }
 
 function handleShoppingList() {
